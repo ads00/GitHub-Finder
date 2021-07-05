@@ -1,7 +1,7 @@
-// 6943add37915006ce89b223a216a0b147a0d256
 
 // Initialising values
-const a = new GitHub();
+const github = new GitHub;
+const ui = new UI;
 
 // Search input
 const searchUser = document.getElementById('searchUser');
@@ -11,18 +11,20 @@ searchUser.addEventListener('keyup', (e) => {
     const userText = e.target.value;
 
     if(userText !== '') {
-        a.getUser(userText)
+        ui.clearAlert();
+
+        github.getUser(userText)
             .then(data => {
                 if(data.profile.message === 'Not Found') {
                     // Show Alert
-                    alert('error');
+                    ui.showAlert('User not found', 'alert alert-danger');
                 } else {
                     // Show Profile
-                    console.log(data);
+                    ui.clearAlert();
+                    ui.showProfile(data.profile);
                 }
-                
             });
     } else {
-        // Clear Profile
+        ui.clearProfile();
     }
 });
